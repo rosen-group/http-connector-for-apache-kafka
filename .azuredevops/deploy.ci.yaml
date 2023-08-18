@@ -11,6 +11,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: PowerShell@2
+  displayName: "Change productname"
+  # To avoid name clashes with existing jars from other repos we refine the productname from http-connector-for-apache-kafka to aiven-http-connector-for-apache-kafka  
+  inputs:
+    targetType: 'inline'
+    script: |
+      'rootProject.name = aiven-http-connector-for-apache-kafka' | Out-File $(Build.SourcesDirectory)/settings.gradle
 - task: Gradle@2
   displayName: "Build kafka http connector"
   inputs:
