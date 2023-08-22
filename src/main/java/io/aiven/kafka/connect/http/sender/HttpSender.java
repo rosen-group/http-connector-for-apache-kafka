@@ -66,10 +66,17 @@ public class HttpSender {
     }
 
     public final void send(final String body, final String key) {
-        final var requestBuilder =
-                httpRequestBuilder
-                        .build(config, key)
-                        .POST(HttpRequest.BodyPublishers.ofString(body));
+        HttpRequest.Builder requestBuilder = null;
+        if (key != null) {
+            requestBuilder = httpRequestBuilder
+                    .build(config, key)
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body));
+        } else {
+            requestBuilder = httpRequestBuilder
+                    .build(config, null)
+                    .POST(HttpRequest.BodyPublishers.ofString(body));
+        }
+
         sendWithRetries(requestBuilder, HttpResponseHandler.ON_HTTP_ERROR_RESPONSE_HANDLER);
     }
 
