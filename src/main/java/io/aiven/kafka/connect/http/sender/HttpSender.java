@@ -66,7 +66,7 @@ public class HttpSender {
     }
 
     public final void send(final String body, final String key) {
-        HttpRequest.Builder requestBuilder = null;
+        HttpRequest.Builder requestBuilder;
         if (key != null) {
             requestBuilder = httpRequestBuilder
                     .build(config, key)
