@@ -68,10 +68,12 @@ public class HttpSender {
     public final void send(final String body, final String key) {
         final HttpRequest.Builder requestBuilder;
         if (config.updateUrlEnabled() && config.httpUpdateUrl() != null && key != null) {
+            log.info("send with updateurl");
             requestBuilder = httpRequestBuilder
                     .build(config, key)
                     .method("PATCH", HttpRequest.BodyPublishers.ofString(body));
         } else {
+            log.info("send with normal url");
             requestBuilder = httpRequestBuilder
                     .build(config, null)
                     .POST(HttpRequest.BodyPublishers.ofString(body));
