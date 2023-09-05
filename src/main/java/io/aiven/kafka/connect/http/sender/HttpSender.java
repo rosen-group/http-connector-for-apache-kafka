@@ -71,7 +71,9 @@ public class HttpSender {
             log.info("send with updateurl");
             requestBuilder = httpRequestBuilder
                     .build(config, key)
-                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body));
+                    /* to allow PATCH with current java version we need to use the generic method */
+                    .method(config.httpUpdateMethod(),
+                    HttpRequest.BodyPublishers.ofString(body));
         } else {
             log.info("send with normal url");
             requestBuilder = httpRequestBuilder
