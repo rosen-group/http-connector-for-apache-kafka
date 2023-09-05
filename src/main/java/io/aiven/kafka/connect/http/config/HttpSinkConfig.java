@@ -38,6 +38,7 @@ public class HttpSinkConfig extends AbstractConfig {
     private static final String CONNECTION_GROUP = "Connection";
     private static final String HTTP_URL_CONFIG = "http.url";
     private static final String HTTP_UPDATE_URL_CONFIG = "http.update.url";
+    private static final String HTTP_UPDATE_METHOD_CONFIG = "http.update.method";
     private static final String HTTP_ENABLE_UPDATE_URL = "http.enable.update.url";
     private static final String HTTP_AUTHORIZATION_TYPE_CONFIG = "http.authorization.type";
     private static final String HTTP_HEADERS_AUTHORIZATION_CONFIG = "http.headers.authorization";
@@ -112,6 +113,19 @@ public class HttpSinkConfig extends AbstractConfig {
                 groupCounter++,
                 ConfigDef.Width.LONG,
                 HTTP_UPDATE_URL_CONFIG
+        );
+
+        configDef.define(
+                HTTP_UPDATE_METHOD_CONFIG,
+                ConfigDef.Type.STRING,
+                "POST",
+                new NonBlankStringValidator(true),
+                ConfigDef.Importance.LOW,
+                "The method to update existing data",
+                CONNECTION_GROUP,
+                groupCounter++,
+                ConfigDef.Width.SHORT,
+                HTTP_UPDATE_METHOD_CONFIG
         );
 
         configDef.define(
@@ -576,6 +590,10 @@ public class HttpSinkConfig extends AbstractConfig {
 
     public final String httpUpdateUrl() {
         return getString(HTTP_UPDATE_URL_CONFIG);
+    }
+
+    public final String httpUpdateMethod() {
+        return getString(HTTP_UPDATE_METHOD_CONFIG);
     }
 
     public final boolean updateUrlEnabled() {

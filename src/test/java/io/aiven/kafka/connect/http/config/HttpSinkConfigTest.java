@@ -611,4 +611,22 @@ final class HttpSinkConfigTest {
                 .returns(null, from(HttpSinkConfig::kafkaRetryBackoffMs));
     }
 
+    @Test
+    void correctUpdateMethod() throws URISyntaxException {
+        final Map<String, String> properties = Map.of(
+                "http.url", "http://localhost:8090",
+                "http.update.url", "http://localhost:8090?id=${key}",
+                "http.enable.update.url", "true",
+                "http.update.method", "PATCH",
+                "http.authorization.type", "none"
+        );
+
+        final HttpSinkConfig config = new HttpSinkConfig(properties);
+        assertThat(config)
+                .returns(new URI("http://localhost:8090"), from(HttpSinkConfig::httpUri))
+                .returns("http://localhost:8090?id=${key}", from(HttpSinkConfig::httpUpdateUrl))
+                .returns("PATCH", from(HttpSinkConfig::httpUpdateMethod)
+           );
+    }
+
 }
