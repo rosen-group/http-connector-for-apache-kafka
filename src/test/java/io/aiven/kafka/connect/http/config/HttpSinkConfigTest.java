@@ -625,8 +625,7 @@ final class HttpSinkConfigTest {
         assertThat(config)
                 .returns(new URI("http://localhost:8090"), from(HttpSinkConfig::httpUri))
                 .returns("http://localhost:8090?id=${key}", from(HttpSinkConfig::httpUpdateUrl))
-                .returns("PATCH", from(HttpSinkConfig::httpUpdateMethod)
-           );
+                .returns("PATCH", from(HttpSinkConfig::httpUpdateMethod));
     }
 
 }
